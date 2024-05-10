@@ -1,3 +1,4 @@
+import allure
 from page_object.admin_page import AdminPage
 from page_object.alert_element import AlertElement
 from page_object.header_and_footer_element import HeaderElement
@@ -5,13 +6,17 @@ from page_object.main_page import MainPage
 from page_object.registration_page import RegistrationPage
 
 
+@allure.feature('HW3')
+@allure.story('Refactoring HW2')
+@allure.title('Создание нового продукта в админке')
 def test_create_new_product_in_admin_page(browser):
+    """Создание нового продукта в админке по заданным параметрам"""
     username = "user"
     password = "bitnami"
-    product_name = "2 New Product"
+    product_name = "1 New Product"
     meta_title = "1234"
     model = "Unknown"
-    default = "new-product1"
+    default = "new-product"
     al_el = AlertElement(browser)
     adm_p = AdminPage(browser)
     adm_p.open()
@@ -22,7 +27,11 @@ def test_create_new_product_in_admin_page(browser):
     al_el.get_success_alert()
 
 
+@allure.feature('HW3')
+@allure.story('Refactoring HW2')
+@allure.title('Удаление первого продукта в админке')
 def test_delete_product_in_admin_page(browser):
+    """Удаление первого продукта в админке после авторизации"""
     username = "user"
     password = "bitnami"
     al_el = AlertElement(browser)
@@ -36,10 +45,14 @@ def test_delete_product_in_admin_page(browser):
     al_el.get_success_alert()
 
 
+@allure.feature('HW3')
+@allure.story('Refactoring HW2')
+@allure.title('Создание нового пользователя')
 def test_add_new_user(browser):
+    """Создание нового пользователя по заданным параметрам"""
     first_name = "Winston"
     last_name = "Churchill"
-    email = "test_125@gmail.com"
+    email = "test_123@gmail.com"
     password = "SuperPassword123"
     reg_p = RegistrationPage(browser)
     reg_p.open()
@@ -49,7 +62,11 @@ def test_add_new_user(browser):
     reg_p.check_registration()
 
 
+@allure.feature('HW3')
+@allure.story('Refactoring HW2')
+@allure.title('Проверка изменения цены на товары')
 def test_change_currency(browser):
+    """Проверка изменения цены на товары при переключении валют"""
     main_p = MainPage(browser)
     header_el = HeaderElement(browser)
     p_1 = main_p.get_price_of_any_product_main()

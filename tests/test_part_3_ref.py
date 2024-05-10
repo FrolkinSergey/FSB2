@@ -1,3 +1,4 @@
+import allure
 from page_object.alert_element import AlertElement
 from page_object.catalog_page import CatalogPage
 from page_object.header_and_footer_element import HeaderElement
@@ -5,7 +6,11 @@ from page_object.admin_page import AdminPage
 from page_object.main_page import MainPage
 
 
+@allure.feature('HW3')
+@allure.story('Refactoring HW1, Part 3')
+@allure.title('Авторизация, проверка авторизации, выход из админки')
 def test_login_and_check_and_logout(browser):
+    """Авторизация, проверка авторизации, выход из админки"""
     username = "user"
     password = "bitnami"
     admin_page = AdminPage(browser)
@@ -17,7 +22,11 @@ def test_login_and_check_and_logout(browser):
     admin_page.get_password_input_field()
 
 
+@allure.feature('HW3')
+@allure.story('Refactoring HW1, Part 3')
+@allure.title('Добавление товара в корзину')
 def test_add_to_cart(browser):
+    """Добавление товара в корзину и проверка его наличия в ней"""
     main_p = MainPage(browser)
     header_el = HeaderElement(browser)
     alert_el = AlertElement(browser)
@@ -30,7 +39,11 @@ def test_add_to_cart(browser):
     header_el.get_elements_in_cart_with_added_product()
 
 
+@allure.feature('HW3')
+@allure.story('Refactoring HW1, Part 3')
+@allure.title('Проверка изменения цены на товары на главной странице')
 def test_price_on_main_page(browser):
+    """Проверка изменения цены на товары на главной странице через сранение цен"""
     main_p = MainPage(browser)
     header_el = HeaderElement(browser)
     p_new1 = main_p.get_price_of_any_product_main()
@@ -40,7 +53,11 @@ def test_price_on_main_page(browser):
     assert p != p_new2.text
 
 
+@allure.feature('HW3')
+@allure.story('Refactoring HW1, Part 3')
+@allure.title('Проверка изменения цены на товары на странице каталога')
 def test_price_on_catalog_page(browser):
+    """Проверка изменения цены на товары на странице каталога через сранение цен"""
     header_el = HeaderElement(browser)
     cat_p = CatalogPage(browser)
     header_el.click_any_dropdown()
