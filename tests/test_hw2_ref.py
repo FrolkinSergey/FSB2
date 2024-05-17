@@ -13,10 +13,10 @@ def test_create_new_product_in_admin_page(browser):
     """Создание нового продукта в админке по заданным параметрам"""
     username = "user"
     password = "bitnami"
-    product_name = "1 New Product"
-    meta_title = "1234"
-    model = "Unknown"
-    default = "new-product"
+    product_name = "New Product 1605"
+    meta_title = "1234567"
+    model = "Unknown 1605"
+    default = "new-product 1605"
     al_el = AlertElement(browser)
     adm_p = AdminPage(browser)
     adm_p.open()
@@ -50,9 +50,9 @@ def test_delete_product_in_admin_page(browser):
 @allure.title('Создание нового пользователя')
 def test_add_new_user(browser):
     """Создание нового пользователя по заданным параметрам"""
-    first_name = "Winston"
-    last_name = "Churchill"
-    email = "test_123@gmail.com"
+    first_name = "Winst"
+    last_name = "Church"
+    email = "test_test_1605@gmail.com"
     password = "SuperPassword123"
     reg_p = RegistrationPage(browser)
     reg_p.open()

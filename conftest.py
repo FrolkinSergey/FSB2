@@ -2,16 +2,19 @@ import allure
 import pytest
 import logging
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOption
+from selenium.webdriver.safari.options import Options as SafariOption
 
 def pytest_addoption(parser):
-    parser.addoption("--browser", default="ch", choices=["sf", "ch", "ya"])
-    parser.addoption("--headless", action="store_true")
-    parser.addoption("--yandexdriver", default="/Users/sergeyfrolkin/Documents/GitHub/FSB2/venv/yandexdriver")
-    parser.addoption("--yandexapp", default="/Applications/Yandex.app")
+    parser.addoption("--browser", default="chrome", choices=["chrome", "firefox", "safari"])
     parser.addoption("--url", default="http://192.168.0.104:8081/")
     parser.addoption("--log_level", action="store", default="INFO")
+    parser.addoption("--executor", action="store", default="192.168.0.104")
+    parser.addoption("--vnc", action="store_true")
+    parser.addoption("--logs", action="store_true")
+    parser.addoption("--video", action="store_true")
+    parser.addoption("--bv")
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
@@ -25,11 +28,15 @@ def pytest_runtest_makereport(item, call):
 @pytest.fixture()
 def browser(request):
     browser_name = request.config.getoption("--browser")
-    headless_mode = request.config.getoption("--headless")
-    yandexdriver = request.config.getoption("--yandexdriver")
-    yandexapp = request.config.getoption("--yandexapp")
     base_url = request.config.getoption("--url")
     log_level = request.config.getoption("--log_level")
+    executor = request.config.getoption("--executor")
+    vnc = request.config.getoption("--vnc")
+    version = request.config.getoption("--bv")
+    logs = request.config.getoption("--logs")
+    video = request.config.getoption("--video")
+
+    executor_url = f"http://{executor}:4444/wd/hub"
 
     logger = logging.getLogger(request.node.name)
     ch = logging.FileHandler(filename=f"tests/logs/{request.node.name}.log")
@@ -37,23 +44,36 @@ def browser(request):
     logger.setLevel(level=log_level)
     logger.addHandler(ch)
 
-    if browser_name == "sf":
-        """Safari not supported Headless mode - https://discussions.apple.com/thread/251837694?sortBy=best"""
-        driver = webdriver.Safari()
-    elif browser_name == "ch":
-        options = Options()
-        if headless_mode:
-            options.add_argument("headless=new")
-        driver = webdriver.Chrome(service=Service(), options=options)
-    elif browser_name == "ya":
-        yaoptions = Options()
-        if headless_mode:
-            yaoptions.add_argument("headless=new")
-        yaoptions.binary_location = yandexapp
-        service = Service(executable_path=yandexdriver)
-        driver = webdriver.Chrome(service=service, options=yaoptions)
+    if browser_name == "chrome":
+        options = ChromeOptions()
+    elif browser_name == "firefox":
+        options = FirefoxOption()
+    elif browser_name == "safari":
+        options = SafariOption()
     else:
         raise ValueError(f"Browser {browser_name} not supported ")
+
+    caps = {
+        "browserName": browser_name,
+        "browserVersion": version,
+        "selenoid:options": {
+            "enableVNC": vnc,
+            "name": request.node.name,
+            "screenResolution": "1280x720",
+            "enableVideo": video,
+            "enableLog": logs,
+            "sessionTimeout": "30m"
+        },
+        "acceptInsecureCerts": True,
+    }
+
+    for k, v in caps.items():
+        options.set_capability(k, v)
+
+    driver = webdriver.Remote(
+        command_executor=executor_url,
+        options=options
+    )
 
     driver.maximize_window()
 
