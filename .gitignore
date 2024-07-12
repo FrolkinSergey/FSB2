@@ -160,5 +160,7 @@ cython_debug/
 .idea/
 /requirements.txt
 /tests/logs
+/tests/allure-results/
 /allure-results/
 /allure-report/
+.run
