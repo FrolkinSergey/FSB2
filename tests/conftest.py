@@ -8,9 +8,9 @@ from selenium.webdriver.safari.options import Options as SafariOption
 
 def pytest_addoption(parser):
     parser.addoption("--browser", default="chrome", choices=["chrome", "firefox", "safari"])
-    parser.addoption("--url", default="http://192.168.0.101:8081/")
+    parser.addoption("--url", default="http://192.168.0.105:8081/")
     parser.addoption("--log_level", action="store", default="INFO")
-    parser.addoption("--executor", action="store", default="192.168.0.101")
+    parser.addoption("--executor", action="store", default="192.168.0.105")
     parser.addoption("--vnc", action="store_true")
     parser.addoption("--logs", action="store_true")
     parser.addoption("--video", action="store_true")
