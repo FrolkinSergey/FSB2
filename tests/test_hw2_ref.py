@@ -1,9 +1,9 @@
 import allure
-from tests.page_object.admin_page import AdminPage
-from tests.page_object.alert_element import AlertElement
-from tests.page_object.header_and_footer_element import HeaderElement
-from tests.page_object.main_page import MainPage
-from tests.page_object.registration_page import RegistrationPage
+from page_object.admin_page import AdminPage
+from page_object.alert_element import AlertElement
+from page_object.header_and_footer_element import HeaderElement
+from page_object.main_page import MainPage
+from page_object.registration_page import RegistrationPage
 
 
 @allure.feature('HW3')

@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from tests.page_object.base_page import BasePage
+from page_object.base_page import BasePage
 
 
 class AdminPage(BasePage):

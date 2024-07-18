@@ -1,10 +1,10 @@
 import allure
-from tests.page_object.catalog_page import CatalogPage
-from tests.page_object.header_and_footer_element import HeaderElement, FooterElement
-from tests.page_object.admin_page import AdminPage
-from tests.page_object.main_page import MainPage
-from tests.page_object.product_page import ProductPage
-from tests.page_object.registration_page import RegistrationPage
+from page_object.catalog_page import CatalogPage
+from page_object.header_and_footer_element import HeaderElement, FooterElement
+from page_object.admin_page import AdminPage
+from page_object.main_page import MainPage
+from page_object.product_page import ProductPage
+from page_object.registration_page import RegistrationPage
 
 
 @allure.feature('HW3')
