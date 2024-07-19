@@ -1,9 +1,9 @@
 import allure
 from page_object.alert_element import AlertElement
-from page_object.catalog_page import CatalogPage
+from page_object import CatalogPage
 from page_object.header_and_footer_element import HeaderElement
 from page_object.admin_page import AdminPage
-from page_object.main_page import MainPage
+from page_object import MainPage
 
 
 @allure.feature('HW3')
