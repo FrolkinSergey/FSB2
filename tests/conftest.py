@@ -1,3 +1,4 @@
+import socket
 import allure
 import pytest
 import logging
@@ -6,24 +7,27 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOption
 from selenium.webdriver.safari.options import Options as SafariOption
 
+
 def pytest_addoption(parser):
     parser.addoption("--browser", default="chrome", choices=["chrome", "firefox", "safari"])
-    parser.addoption("--url", default="http://192.168.0.105:8081/")
+    parser.addoption("--url", default=f"http://192.168.0.101/")
     parser.addoption("--log_level", action="store", default="INFO")
-    parser.addoption("--executor", action="store", default="192.168.0.105")
+    parser.addoption("--executor", action="store", default=f"192.168.0.101")
     parser.addoption("--vnc", action="store_true")
     parser.addoption("--logs", action="store_true")
     parser.addoption("--video", action="store_true")
     parser.addoption("--bv")
 
+
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
-def pytest_runtest_makereport(item, call):
+def pytest_runtest_makereport(item):
     outcome = yield
     rep = outcome.get_result()
     if rep.outcome != 'passed':
         item.status = 'failed'
     else:
         item.status = 'passed'
+
 
 @pytest.fixture()
 def browser(request):
@@ -95,4 +99,4 @@ def browser(request):
             attachment_type=allure.attachment_type.PNG
         )
 
-    request.addfinalizer(driver.close)
+    driver.quit()
