@@ -42,13 +42,10 @@ services:
   tests:
     image: tests_container:v1
     build:
-      context: tests
-      dockerfile: Dockerfile
+      dockerfile: tests/Dockerfile
     depends_on:
       - opencart
-      - mariadb
-      - phpadmin
-    command: ./wait-for-it.sh 192.168.0.105 8081 pytest -n 2 --browser chrome --bv "124.0"
+    command: ./wait-for-it.sh 192.168.0.105 8081 -- pytest /tests --browser chrome --bv "124.0" --vnc
     container_name: tests_container
     networks:
       - test_net
