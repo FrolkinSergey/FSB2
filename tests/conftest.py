@@ -10,7 +10,7 @@ from selenium.webdriver.safari.options import Options as SafariOption
 
 def pytest_addoption(parser):
     parser.addoption("--browser", default="chrome", choices=["chrome", "firefox", "safari"])
-    parser.addoption("--url", default=f"http://192.168.0.101/")
+    parser.addoption("--url", default=f"http://192.168.0.101:8081/")
     parser.addoption("--log_level", action="store", default="INFO")
     parser.addoption("--executor", action="store", default=f"192.168.0.101")
     parser.addoption("--vnc", action="store_true")
@@ -99,4 +99,5 @@ def browser(request):
             attachment_type=allure.attachment_type.PNG
         )
 
+    # request.addfinalizer(driver.close)
     driver.quit()

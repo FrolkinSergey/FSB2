@@ -9,4 +9,4 @@ venv/
 .git
 .cache
 .run
-!app.env
+!.env

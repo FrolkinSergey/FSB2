@@ -31,8 +31,7 @@ services:
       - '8081:8080'
       - '443:8443'
     environment:
-      - LOCAL_IP=${LOCAL_IP}
-      - OPENCART_HOST=LOCAL_IP:8081
+      - OPENCART_HOST=${LOCAL_IP}:8081
       - OPENCART_DATABASE_HOST=mariadb
       - OPENCART_DATABASE_PORT_NUMBER=3306
       - OPENCART_DATABASE_USER=bn_opencart
@@ -43,8 +42,6 @@ services:
       - 'opencart_storage_data:/bitnami/opencart_storage/'
     depends_on:
       - mariadb
-    env_file:
-      - app.env
     networks:
       - test_net
 
@@ -60,17 +57,13 @@ services:
   selenoid-ui:
     image: "aerokube/selenoid-ui"
     network_mode: bridge
-    environment:
-      - LOCAL_IP=${LOCAL_IP}
     depends_on:
       - selenoid
     links:
       - selenoid
     ports:
-      - "8080:8080"
-    command: [ "--selenoid-uri", "http://LOCAL_IP:4444" ]
-    env_file:
-      - app.env
+      - "8090:8080"
+    command: [ "--selenoid-uri", "http://${LOCAL_IP}:4444" ]
 
   chrome124:
     image: selenoid/chrome:124.0
@@ -88,18 +81,14 @@ services:
     image: tests_container:v1
     build:
       dockerfile: tests/Dockerfile
-    environment:
-      - LOCAL_IP=${LOCAL_IP}
     depends_on:
       - opencart
       - selenoid
       - selenoid-ui
-    command: ./wait-for-it.sh LOCAL_IP 8081 -- pytest /tests -n 2 --browser chrome --bv "124.0" --vnc
+    command: ./wait-for-it.sh ${LOCAL_IP} 8081 -- pytest /tests -n 2 --browser chrome --bv "124.0" --vnc
     container_name: tests_container
     networks:
       - test_net
-    env_file:
-      - app.env
 
 networks:
   test_net:
