@@ -81,6 +81,8 @@ services:
     image: tests_container:v1
     build:
       dockerfile: tests/Dockerfile
+    environment:
+      LOCAL_IP:
     depends_on:
       - opencart
       - selenoid
