@@ -91,6 +91,7 @@ services:
       - test_net
     volumes:
       - "/Users/sergeyfrolkin/.jenkins/workspace/homework/allure-results/:/allure-results/"
+      - "/Users/sergeyfrolkin/.jenkins/workspace/homework/tests/logs/:/tests/logs/"
 
 networks:
   test_net:
