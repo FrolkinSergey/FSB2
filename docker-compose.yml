@@ -89,6 +89,8 @@ services:
     container_name: tests_container
     networks:
       - test_net
+    volumes:
+      - /Users/sergeyfrolkin/.jenkins/workspace/homework/allure-result/:/allure-result/"
 
 networks:
   test_net:
