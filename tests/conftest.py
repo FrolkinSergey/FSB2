@@ -99,5 +99,4 @@ def browser(request):
             attachment_type=allure.attachment_type.PNG
         )
 
-    # request.addfinalizer(driver.close)
     driver.quit()
