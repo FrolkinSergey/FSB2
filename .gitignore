@@ -164,5 +164,4 @@ cython_debug/
 .run
 !/requirements.txt
 !/tests/logs/
-!/allure-results/
-!/allure-report/
+!/.env
