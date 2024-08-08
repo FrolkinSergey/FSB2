@@ -15,7 +15,7 @@ def test_find_elements_on_main_page(browser):
     header_el = HeaderElement(browser)
     main_page = MainPage(browser)
     footer_el = FooterElement(browser)
-    # header_el.get_logo()
+    header_el.get_logo()
     header_el.get_search_field()
     header_el.click_cart_hidden()
     header_el.check_empty_cart()
