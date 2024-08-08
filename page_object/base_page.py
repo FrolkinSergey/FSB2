@@ -13,7 +13,7 @@ class BasePage:
     def _text_xpath(self, text):
         return f"//*[text()='{text}']"
 
-    def get_element(self, locator: tuple, timeout=10):
+    def get_element(self, locator: tuple, timeout=15):
         """Получение элемента по локатору"""
         return WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located(locator))
 
