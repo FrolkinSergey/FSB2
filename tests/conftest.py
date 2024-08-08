@@ -10,9 +10,8 @@ from selenium.webdriver.safari.options import Options as SafariOption
 
 def pytest_addoption(parser):
     parser.addoption("--browser", default="chrome", choices=["chrome", "firefox", "safari"])
-    parser.addoption("--url", default=f"http://192.168.0.101:8081/")
+    parser.addoption("--url", default=f"192.168.0.101")
     parser.addoption("--log_level", action="store", default="INFO")
-    parser.addoption("--executor", action="store", default=f"192.168.0.101")
     parser.addoption("--vnc", action="store_true")
     parser.addoption("--logs", action="store_true")
     parser.addoption("--video", action="store_true")
@@ -32,15 +31,15 @@ def pytest_runtest_makereport(item):
 @pytest.fixture()
 def browser(request):
     browser_name = request.config.getoption("--browser")
-    base_url = request.config.getoption("--url")
     log_level = request.config.getoption("--log_level")
-    executor = request.config.getoption("--executor")
+    url = request.config.getoption("--url")
     vnc = request.config.getoption("--vnc")
     version = request.config.getoption("--bv")
     logs = request.config.getoption("--logs")
     video = request.config.getoption("--video")
 
-    executor_url = f"http://{executor}:4444/wd/hub"
+    base_url = f"http://{url}:8081/"
+    executor_url = f"http://{url}:4444/wd/hub"
 
     logger = logging.getLogger(request.node.name)
     ch = logging.FileHandler(filename=f"tests/logs/{request.node.name}.log")
