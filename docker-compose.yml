@@ -81,13 +81,11 @@ services:
     image: tests_container:v1
     build:
       dockerfile: tests/Dockerfile
-    environment:
-      LOCAL_IP:
     depends_on:
       - opencart
       - selenoid
       - selenoid-ui
-    command: ./wait-for-it.sh ${LOCAL_IP} 8081 -- pytest /tests -n 2 --browser chrome --bv "124.0" --vnc
+    command: ./wait-for-it.sh ${LOCAL_IP} 8081 -- pytest /tests -n ${N} --browser ${BROWSER} --bv ${BV} --vnc
     container_name: tests_container
     networks:
       - test_net
